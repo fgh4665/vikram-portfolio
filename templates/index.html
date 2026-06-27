@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ name }} — Cybersecurity Portfolio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Share+Tech+Mono&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <span class="nav-logo"><span class="logo-bracket">[</span>VS<span class="logo-bracket">]</span></span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certifications">Certs</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">// cybersecurity analyst</p>
+      <h1 class="hero-name">{{ name }}</h1>
+      <p class="hero-role">{{ role }}</p>
+      <p class="hero-bio">{{ tagline }}</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-badges">
+        <span class="hbadge">🏆 Internshala Top Performer</span>
+        <span class="hbadge">⭐ Grade A — Skill India</span>
+        <span class="hbadge">🔐 VAPT Certified</span>
+      </div>
+    </div>
+    <div class="hero-deco" aria-hidden="true">
+      <div class="hero-photo-wrap">
+        <img src="{{ url_for('static', filename='vikram.jpg') }}" alt="Vikram Singh" class="hero-photo" />
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section section-alt">
+    <div class="container">
+      <div class="section-label">About Me</div>
+      <div class="about-grid">
+        <div class="about-avatar">
+          <div class="avatar-ring">
+            <div class="avatar-initials">{{ initials }}</div>
+          </div>
+          <div class="avatar-status">
+            <span class="status-dot"></span> Open to opportunities
+          </div>
+        </div>
+        <div class="about-content">
+          <h2 class="section-title">Who I Am</h2>
+          {% for para in about %}
+          <p>{{ para }}</p>
+          {% endfor %}
+          <div class="about-facts">
+            {% for fact in facts %}
+            <div class="fact">
+              <span class="fact-icon">{{ fact.icon }}</span>
+              <span class="fact-text">{{ fact.text }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-label">Expertise</div>
+      <h2 class="section-title center">Technical Skills</h2>
+      <div class="skills-grid">
+        {% for category in skills %}
+        <div class="skill-card fade-in">
+          <div class="skill-icon">{{ category.icon }}</div>
+          <h3 class="skill-title">{{ category.name }}</h3>
+          <ul class="skill-list">
+            {% for item in category.tools %}
+            <li class="skill-tag">{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="section section-alt">
+    <div class="container">
+      <div class="section-label">Work</div>
+      <h2 class="section-title">Experience</h2>
+      {% for job in experience %}
+      <div class="exp-card fade-in">
+        <div class="exp-header">
+          <div>
+            <h3 class="exp-role">{{ job.role }}</h3>
+            <p class="exp-company">{{ job.company }}</p>
+          </div>
+          <span class="exp-period">{{ job.period }}</span>
+        </div>
+        <ul class="exp-points">
+          {% for point in job.points %}
+          <li>{{ point }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-label">Work</div>
+      <h2 class="section-title center">Key Projects</h2>
+      <div class="projects-grid">
+        {% for project in projects %}
+        <article class="project-card fade-in {% if loop.first %}project-card--featured{% endif %}">
+          <div class="project-header">
+            <span class="project-number">0{{ loop.index }}</span>
+            <span class="project-badge">{{ project.tag }}</span>
+          </div>
+          <h3 class="project-title">{{ project.title }}</h3>
+          <p class="project-desc">{{ project.description }}</p>
+          <div class="project-tech">
+            {% for tech in project.tech %}
+            <span class="tech-chip">{{ tech }}</span>
+            {% endfor %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certifications" class="section section-alt">
+    <div class="container">
+      <div class="section-label">Credentials</div>
+      <h2 class="section-title center">Certifications & Training</h2>
+      <div class="certs-grid">
+        {% for cert in certifications %}
+        <div class="cert-card fade-in">
+          <div class="cert-top">
+            <span class="cert-icon">🎖️</span>
+            <span class="cert-date">{{ cert.date }}</span>
+          </div>
+          <h4 class="cert-name">{{ cert.name }}</h4>
+          <p class="cert-issuer">{{ cert.issuer }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section section-dark">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="section-label light">Contact</div>
+        <h2 class="section-title light">Let's Connect</h2>
+        <p class="contact-sub">Open to cybersecurity roles, freelance audits, and collaboration.</p>
+        <div class="contact-links">
+          {% for link in contact %}
+          <a href="{{ link.href }}" class="contact-pill" {% if not link.href.startswith('mailto') and not link.href.startswith('tel') %}target="_blank" rel="noopener"{% endif %}>
+            <span>{{ link.icon }}</span>
+            {{ link.label }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 Vikram Singh · Cybersecurity Analyst · Built with Python & Flask</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 72, behavior: 'smooth' }); }
+      });
+    });
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (scrollY >= s.offsetTop - 100) cur = s.id; });
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+      document.querySelector('.nav').classList.toggle('nav--scrolled', scrollY > 20);
+    });
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
